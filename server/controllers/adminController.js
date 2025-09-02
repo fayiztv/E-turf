@@ -1,11 +1,11 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
+import TurfAdmin from "../models/turfAdmin.js";
 
 // Main Admin Login
 export const loginMainAdmin = async (req, res) => {
   const { name, password } = req.body;
 
   try {
-    // Check against .env values instead of DB
     if (
       name === process.env.MAIN_ADMIN_NAME &&
       password === process.env.MAIN_ADMIN_PASSWORD
@@ -21,5 +21,16 @@ export const loginMainAdmin = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+export const addTurfAdmin = async (req, res) => {
+  const { name, password, phone } = req.body;
+
+  try {
+    const turfAdmin = await TurfAdmin.create({ name, password, phone });
+    res.status(201).json(turfAdmin);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };
