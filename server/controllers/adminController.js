@@ -34,3 +34,13 @@ export const addTurfAdmin = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+// List Turf Admins
+export const getTurfAdmins = async (req, res) => {
+  try {
+    const admins = await TurfAdmin.find({});
+    res.json(admins);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
