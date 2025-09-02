@@ -47,16 +47,34 @@ export const getTurfAdmins = async (req, res) => {
 
 // Block/Unblock Turf Admin
 export const blockTurfAdmin = async (req, res) => {
-    try {
-      const turfAdmin = await TurfAdmin.findById(req.params.id);
-  
-      if (!turfAdmin) return res.status(404).json({ message: 'Turf Admin not found' });
-  
-      turfAdmin.isBlocked = !turfAdmin.isBlocked; // toggle block/unblock
-      await turfAdmin.save();
-  
-      res.json({ message: `Turf Admin ${turfAdmin.isBlocked ? 'blocked' : 'unblocked'}` });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  };
+  try {
+    const turfAdmin = await TurfAdmin.findById(req.params.id);
+
+    if (!turfAdmin)
+      return res.status(404).json({ message: "Turf Admin not found" });
+
+    turfAdmin.isBlocked = !turfAdmin.isBlocked; // toggle block/unblock
+    await turfAdmin.save();
+
+    res.json({
+      message: `Turf Admin ${turfAdmin.isBlocked ? "blocked" : "unblocked"}`,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Delete Turf Admin
+export const deleteTurfAdmin = async (req, res) => {
+  try {
+    const turfAdmin = await TurfAdmin.findById(req.params.id);
+
+    if (!turfAdmin)
+      return res.status(404).json({ message: "Turf Admin not found" });
+
+    await turfAdmin.deleteOne();
+    res.json({ message: "Turf Admin deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
