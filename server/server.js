@@ -5,6 +5,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { connectDB } from './config/db.js';
 
+import adminRoutes from './routes/adminRoutes.js';
+
 // Load environment variables
 dotenv.config();
 
@@ -22,6 +24,8 @@ app.use(morgan('dev'));
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+
+app.use('/api/admin', adminRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
